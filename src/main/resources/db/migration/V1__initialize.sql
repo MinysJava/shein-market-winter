@@ -150,6 +150,15 @@ VALUES
 (1, 2),
 (1, 3);
 
+INSERT INTO users (username,password,first_name,last_name,email,phone)
+VALUES
+('user','$2a$10$4p6U8Ve1ZjJ/S0Qd9RFyB.hJjpusgdYmTtIIqpHs3k0hfbhDe6cyq','User','User','User@gmail.com','+79882222222');
+
+INSERT INTO users_roles (user_id, role_id)
+VALUES
+(2, 1);
+
+
 INSERT INTO categories (title)
 VALUES
 ("Телевизоры"), ("Ноутбуки");
