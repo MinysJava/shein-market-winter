@@ -104,7 +104,7 @@ CREATE TABLE orders (
   price                 DECIMAL(8,2) NOT NULL,
   delivery_price        DECIMAL(8,2) NOT NULL,
   delivery_address_id   INT(11) NOT NULL,
-  phone_number          VARCHAR(20) NOT NULL,
+  phone_number          VARCHAR(20)NOT NULL,
   status_id             INT(11) NOT NULL,
   delivery_date         TIMESTAMP NOT NULL,
   create_at             TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
