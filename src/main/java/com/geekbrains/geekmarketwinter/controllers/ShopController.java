@@ -1,6 +1,7 @@
 package com.geekbrains.geekmarketwinter.controllers;
 
 import com.geekbrains.geekmarketwinter.entites.DeliveryAddress;
+import com.geekbrains.geekmarketwinter.entites.Order;
 import com.geekbrains.geekmarketwinter.entites.Product;
 import com.geekbrains.geekmarketwinter.entites.User;
 import com.geekbrains.geekmarketwinter.repositories.specifications.ProductSpecs;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +31,8 @@ public class ShopController {
 
     private UserService userService;
 
+    private OrderService orderService;
+
     @Autowired
     public void setShoppingCartService(ShoppingCartService shoppingCartService) {
         this.shoppingCartService = shoppingCartService;
@@ -43,6 +47,11 @@ public class ShopController {
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
+    }
+
+    @Autowired
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
     }
 
 
@@ -105,11 +114,11 @@ public class ShopController {
 //        order.setPhoneNumber(orderFromFrontend.getPhoneNumber());
 //        order.setDeliveryDate(LocalDateTime.now().plusDays(7));
 //        order.setDeliveryPrice(0.0);
-//        order = orderService.saveOrder(order);
+//         orderService.saveOrder(order);
 //        model.addAttribute("order", order);
 //        return "order-filler";
 //    }
-////
+//////
 //    @GetMapping("/order/result/{id}")
 //    public String orderConfirm(Model model, @PathVariable(name = "id") Long id, Principal principal) {
 //        if (principal == null) {

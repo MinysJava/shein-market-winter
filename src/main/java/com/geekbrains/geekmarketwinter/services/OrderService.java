@@ -25,20 +25,22 @@ public class OrderService {
         this.userService = userService;
     }
 
-    public void saveOrder(HttpSession session, Principal principal) {
+    public Order makeOrder(ShoppingCart cart, User user) {
         Order order = new Order();
-        ShoppingCart cart = shoppingCartService.getCurrentCart(session);
+//        ShoppingCart cart = shoppingCartService.getCurrentCart(session);
+
 
 
 
         order.setOrderItem(cart.getItems());
-
-        order.setPrice(cart.getTotalCost());
-//        order.setStatus(new OrderStatus());
-        User user = userService.findByUserName(principal.getName());
         order.setUser(user);
-        order.setDeliveryAddress(new DeliveryAddress());
-        order.setStatus(new OrderStatus());
+
+//        order.setPrice(cart.getTotalCost());
+//        order.setStatus(new OrderStatus());
+//        User user = userService.findByUserName(principal.getName());
+//        order.setUser(user);
+//        order.setDeliveryAddress(new DeliveryAddress());
+//        order.setStatus(new OrderStatus());
 //            orderItem.setItemPrice(product.getPrice());
 //            orderItem.setQuantity(0L);
 //            orderItem.setId(0L);
@@ -47,11 +49,15 @@ public class OrderService {
 //
 //        orderItem.setQuantity(orderItem.getQuantity() + 1);
 //        recalculate();
-        saveOrder(order);
+        return order;
+
     }
 
     public void saveOrder(Order order) {
         orderRepository.save(order);
     }
 
+    public Order findById(Long id) {
+        return orderRepository.findOrderById(id);
+    }
 }
