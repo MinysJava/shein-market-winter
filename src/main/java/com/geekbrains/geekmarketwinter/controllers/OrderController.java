@@ -1,7 +1,9 @@
 package com.geekbrains.geekmarketwinter.controllers;
 
+import com.geekbrains.geekmarketwinter.entites.DeliveryAddress;
 import com.geekbrains.geekmarketwinter.entites.Order;
 import com.geekbrains.geekmarketwinter.entites.User;
+import com.geekbrains.geekmarketwinter.services.DeliveryAddressService;
 import com.geekbrains.geekmarketwinter.services.OrderService;
 import com.geekbrains.geekmarketwinter.services.ShoppingCartService;
 import com.geekbrains.geekmarketwinter.services.UserService;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/order")
@@ -25,6 +28,7 @@ public class OrderController {
     private ShoppingCartService shoppingCartService;
 
     private UserService userService;
+    private DeliveryAddressService deliveryAddressService;
 
     @Autowired
     public void setShoppingCartService(ShoppingCartService shoppingCartService) {
@@ -41,20 +45,27 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    @Autowired
+    public void setDeliveryAddressService(DeliveryAddressService deliveryAddressService) {
+        this.deliveryAddressService = deliveryAddressService;
+    }
+
     @GetMapping
     public String showOrderPage(){
         return "orders-page";
     }
 
     @GetMapping("/fill")
-    public String orderfill(Model model, HttpServletRequest httpServletRequest, @ModelAttribute(name = "order") Order orderFromFrontend, Principal principal) {
+    public String orderfill(Model model, HttpServletRequest httpServletRequest, Principal principal) {
         if (principal == null) {
             return "redirect:/login";
         }
         User user = userService.findByUserName(principal.getName());
         Order order = orderService.makeOrder(shoppingCartService.getCurrentCart(httpServletRequest.getSession()), user);
+        List<DeliveryAddress> deliveryAddress = deliveryAddressService.findByUserId(user.getId());
 
         model.addAttribute("order", order);
+        model.addAttribute("deliveryAddresses", deliveryAddress);
         return "order-filler";
     }
 
