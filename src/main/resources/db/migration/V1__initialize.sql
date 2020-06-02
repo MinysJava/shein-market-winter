@@ -189,4 +189,6 @@ VALUES
 INSERT INTO delivery_addresses (user_id, address)
 VALUES
 (1, "18a Diagon Alley"),
-(1, "4 Privet Drive");
+(1, "4 Privet Drive"),
+(2, "18a Diagon Alley"),
+(2, "4 Privet Drive");
