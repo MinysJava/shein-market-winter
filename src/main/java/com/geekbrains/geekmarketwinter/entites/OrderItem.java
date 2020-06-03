@@ -3,7 +3,6 @@ package com.geekbrains.geekmarketwinter.entites;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders_item")

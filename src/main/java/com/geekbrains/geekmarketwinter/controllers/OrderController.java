@@ -12,10 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -54,11 +51,6 @@ public class OrderController {
         this.deliveryAddressService = deliveryAddressService;
     }
 
-//    @GetMapping
-//    public String showOrderPage(){
-//        return "orders-page";
-//    }
-
     @GetMapping("/fill")
     public String orderfill(Model model, HttpServletRequest httpServletRequest, Principal principal) {
         if (principal == null) {
@@ -66,14 +58,11 @@ public class OrderController {
         }
         User user = userService.findByUserName(principal.getName());
         ShoppingCart cart = shoppingCartService.getCurrentCart(httpServletRequest.getSession());
-//        Order order = orderService.makeOrder(shoppingCartService.getCurrentCart(httpServletRequest.getSession()), user);
         Order order = new Order();
         order.setUser(user);
         order.setOrderItem(cart.getItems());
         order.setPrice(cart.getTotalCost());
         List<DeliveryAddress> deliveryAddress = deliveryAddressService.findByUserId(user.getId());
-
-
         model.addAttribute("order", order);
         model.addAttribute("deliveryAddresses", deliveryAddress);
         return "order-filler";
