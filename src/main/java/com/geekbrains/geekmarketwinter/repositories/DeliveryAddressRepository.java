@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface DeliveryAddressRepository extends CrudRepository<DeliveryAddress, Long> {
     List<DeliveryAddress> findByUserId (Long id);
+
+    DeliveryAddress findFirstByUserId(Long id);
 }

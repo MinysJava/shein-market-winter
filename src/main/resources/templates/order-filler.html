@@ -27,22 +27,22 @@
     <form th:action="@{/order/confirm}" th:object="${order}" method="post" class="form-horizontal">
         <table class="table table-hover">
             <thead class="thead-dark">
-            <tr>
+            <tr >
                 <th>Название товара</th>
                 <th>Количество</th>
                 <th>Стоимость</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="orderItem : ${order.orderItem}">
-                <td th:text="${orderItem.product.title}"/>
-                <td th:text="${orderItem.quantity}"/>
-                <td th:text="${orderItem.totalPrice}"/>
+            <tr th:each="orderItem : ${order.getOrderItem()}">
+                <td th:text="${orderItem.product.title}"></td>
+                <td th:text="${orderItem.quantity}"></td>
+                <td th:text="${orderItem.totalPrice}"></td>
             </tr>
             <tr>
                 <td>Итоговая сумма</td>
                 <td/>
-                <td th:text="${order.price}"/>
+                <td th:text="${order.price}"></td>
             </tr>
             </tbody>
         </table>
@@ -62,13 +62,13 @@
             </div>
         </div>
         <div th:unless="${!order.confirmed}">
-            <span th:text="'Адрес доставки: ' + ${order.deliveryAddress.address}"/>
+            <span th:text="'Адрес доставки: ' + ${order.deliveryAddress.address}"></span>
             <br>
-            <span th:text="'Номер телефона: ' + ${order.phoneNumber}"/>
+            <span th:text="'Номер телефона: ' + ${order.phoneNumber}"></span>
             <br>
             <br>
             <div class="col-sm-6 controls">
-                <a class="btn btn-primary" th:href="@{'/order/result/' + ${order.id}}">Оплатить</a>
+                <a class="btn btn-primary" th:href="@{'/order/result/'+${order.id}}">Оплатить</a>
                 <!--<a class="btn btn-primary" th:href="@{'/paypal/buy'}">Оплатить</a>-->
                 <button class="btn btn-secondary" th:href="@{/shop}">Вернуться на страницу магазина</button>
             </div>

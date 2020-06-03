@@ -18,4 +18,8 @@ public class DeliveryAddressService {
     public List<DeliveryAddress> findByUserId(Long id){
         return deliveryAddressRepository.findByUserId(id);
     }
+
+    public DeliveryAddress findFirstByUserId(Long id) {
+        return deliveryAddressRepository.findFirstByUserId(id);
+    }
 }

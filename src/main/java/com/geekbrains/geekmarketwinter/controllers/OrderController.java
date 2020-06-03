@@ -54,10 +54,10 @@ public class OrderController {
         this.deliveryAddressService = deliveryAddressService;
     }
 
-    @GetMapping
-    public String showOrderPage(){
-        return "orders-page";
-    }
+//    @GetMapping
+//    public String showOrderPage(){
+//        return "orders-page";
+//    }
 
     @GetMapping("/fill")
     public String orderfill(Model model, HttpServletRequest httpServletRequest, Principal principal) {
@@ -86,20 +86,21 @@ public class OrderController {
         Order order = orderService.makeOrder(cart, user);
         order.setDeliveryAddress(orderFromFrontend.getDeliveryAddress());
         order.setPhoneNumber(orderFromFrontend.getPhoneNumber());
-        order.setDeliveryDate(LocalDateTime.now().plusDays(7));
-//        order.set
-        order.setDeliveryPrice(0.0);
+        List<Order> listOrder = orderService.findByUserId(user.getId());
+        order = listOrder.get(listOrder.size() - 1);
         for (OrderItem oi: cart.getItems()) {
-            oi.setOrder(orderService.findByUserId(user.getId()));
+            oi.setOrder(order);
             orderItemService.save(oi);
-
         }
+        order.setConfirmed(true);
+        order.setOrderItem(cart.getItems());
         orderService.saveOrder(order);
         model.addAttribute("order", order);
         return "order-filler";
     }
+
     @GetMapping("/result/{id}")
-    public String orderConfirm(Model model, @PathVariable(name = "id") Long id, Principal principal) {
+    public String orderConfirm(Model model, @PathVariable(value = "id") Long id, Principal principal) {
         if (principal == null) {
             return "redirect:/login";
         }

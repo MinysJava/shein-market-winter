@@ -20,16 +20,16 @@ public class OrderService {
     private OrderItemService orderItemService;
 //    private ShoppingCartService shoppingCartService;
 //    private UserService userService;
-//    private DeliveryAddressService deliveryAddressService;
+    private DeliveryAddressService deliveryAddressService;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, OrderStatusService orderStatusService, OrderItemService orderItemService) {
+    public OrderService(OrderRepository orderRepository, OrderStatusService orderStatusService, OrderItemService orderItemService, DeliveryAddressService deliveryAddressService) {
         this.orderRepository = orderRepository;
         this.orderStatusService = orderStatusService;
         this.orderItemService = orderItemService;
 //        this.shoppingCartService = shoppingCartService;
 //        this.userService = userService;
-//        this.deliveryAddressService = deliveryAddressService  ;
+        this.deliveryAddressService = deliveryAddressService  ;
     }
 
     public Order makeOrder(ShoppingCart cart, User user) {
@@ -38,9 +38,9 @@ public class OrderService {
 //        for (OrderItem oi: cart.getItems()) {
 //            orderItemService.save(oi);
 //        }
-        DeliveryAddress deliveryAddress = new DeliveryAddress();
-        deliveryAddress.setAddress("-");
-        deliveryAddress.setId(0L);
+//        DeliveryAddress deliveryAddress = new DeliveryAddress();
+//        deliveryAddress.setAddress("-");
+//        deliveryAddress.setId(0L);
 
 
 
@@ -49,11 +49,12 @@ public class OrderService {
         order.setUser(user);
         order.setPrice(cart.getTotalCost());
         order.setStatus(orderStatusService.findByTitle("Сформирован"));
-        order.setDeliveryAddress(deliveryAddress);
+        order.setDeliveryAddress(deliveryAddressService.findFirstByUserId(user.getId()));
         order.setPhoneNumber("-");
         order.setDeliveryDate(LocalDateTime.now().plusDays(7));
         order.setDeliveryPrice(0.0);
-//        orderRepository.save(order);
+        order.setDeliveryDate(LocalDateTime.now().plusDays(7));
+        orderRepository.save(order);
 //        order.setDeliveryAddress(deliveryAddressService.findByUserId(user.getId()));
 
 //        order.setPrice(cart.getTotalCost());
@@ -86,11 +87,11 @@ public class OrderService {
 //        return order;
 //    }
 
-    public Order findByUserId(Long id){
+    public List<Order> findByUserId(Long id){
         List<Order> listOrder = orderRepository.findAllByUserId(id);
 
-        Order order = listOrder.get(listOrder.size() - 1);
 
-        return order;
+
+        return listOrder;
     }
 }
