@@ -22,7 +22,41 @@
     <br>
     <h1>Профиль</h1>
 
-    <div th:text="${session.user.userName}"></div>
+    <h2 th:text="${session.user.userName}"></h2>
+
+    <div>
+        <div th:each="order : ${orders}">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>№</th>
+                    <th>Название товара</th>
+                    <th>Цена за ед.</th>
+                    <th>Кол-во</th>
+                    <th>Сумма</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cartItem, itrStat : ${order.getOrderItem()}">
+                    <td th:text="${itrStat.index + 1}"/>
+                    <td th:text="${cartItem.product.title}"/>
+                    <td th:text="${cartItem.itemPrice}"/>
+                    <td th:text="${cartItem.quantity}"/>
+                    <td th:text="${cartItem.totalPrice}"/>
+                </tr>
+                <tr>
+                    <td/><td/><td/>
+                    <td>Итого заказ:</td>
+                    <td th:text="${order.getPrice()}"/>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+    </div>
 
 
 </div>

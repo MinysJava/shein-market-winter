@@ -1,7 +1,10 @@
 package com.geekbrains.geekmarketwinter.controllers;
 
 
+import com.geekbrains.geekmarketwinter.entites.Order;
 import com.geekbrains.geekmarketwinter.entites.User;
+import com.geekbrains.geekmarketwinter.services.OrderService;
+import com.geekbrains.geekmarketwinter.services.UserService;
 import com.geekbrains.geekmarketwinter.services.UserServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,40 +18,31 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/profile")
 public class ProfileController {
 
-    private UserServiceImpl userService;
+    private OrderService orderService;
+    private UserService userService;
 
-
+    public ProfileController(OrderService orderService, UserService userService) {
+        this.orderService = orderService;
+        this.userService = userService;
+    }
 
     @GetMapping
-    public String profile(Model model,
-                          HttpSession session) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-//
-//        HttpSession session = attr.getRequest().getSession(true);
-//        User user = userService.findByUserName(auth.getPrincipal().getClass().getName());
-//
-        model.addAttribute("session", session);
-
-
-
-        return "profile";
+    public String profile(Model model, HttpSession session, Principal principal) {
+        User user = userService.findByUserName(principal.getName());
+        List<Order> listOrder = orderService.findByUserId(user.getId());
+        model.addAttribute("orders", listOrder);
+       return "profile";
     }
 
 
 
 
-//    @GetMapping("/{username}")
-//    public String profileUsername(Model model, @PathVariable(name = "username") String username) {
-//        User user = userService.findByUserName(username);
-//
-//        model.addAttribute("user", user);
-//
-//        return "profile";
-//    }
+
 }
