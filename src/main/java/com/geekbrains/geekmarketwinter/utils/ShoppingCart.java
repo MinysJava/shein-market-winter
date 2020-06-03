@@ -24,7 +24,7 @@ public class ShoppingCart {
             orderItem.setProduct(product);
             orderItem.setItemPrice(product.getPrice());
             orderItem.setQuantity(0L);
-//            orderItem.setId(0L);
+            orderItem.setId(0L);
             orderItem.setTotalPrice(0.0);
             items.add(orderItem);
         }

@@ -2,11 +2,9 @@ package com.geekbrains.geekmarketwinter.controllers;
 
 import com.geekbrains.geekmarketwinter.entites.DeliveryAddress;
 import com.geekbrains.geekmarketwinter.entites.Order;
+import com.geekbrains.geekmarketwinter.entites.OrderItem;
 import com.geekbrains.geekmarketwinter.entites.User;
-import com.geekbrains.geekmarketwinter.services.DeliveryAddressService;
-import com.geekbrains.geekmarketwinter.services.OrderService;
-import com.geekbrains.geekmarketwinter.services.ShoppingCartService;
-import com.geekbrains.geekmarketwinter.services.UserService;
+import com.geekbrains.geekmarketwinter.services.*;
 import com.geekbrains.geekmarketwinter.utils.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,10 +27,16 @@ public class OrderController {
 
     private UserService userService;
     private DeliveryAddressService deliveryAddressService;
+    private OrderItemService orderItemService;
 
     @Autowired
     public void setShoppingCartService(ShoppingCartService shoppingCartService) {
         this.shoppingCartService = shoppingCartService;
+    }
+
+    @Autowired
+    public void setOrderItemService(OrderItemService orderItemService) {
+        this.orderItemService = orderItemService;
     }
 
     @Autowired
@@ -61,8 +65,14 @@ public class OrderController {
             return "redirect:/login";
         }
         User user = userService.findByUserName(principal.getName());
-        Order order = orderService.makeOrder(shoppingCartService.getCurrentCart(httpServletRequest.getSession()), user);
+        ShoppingCart cart = shoppingCartService.getCurrentCart(httpServletRequest.getSession());
+//        Order order = orderService.makeOrder(shoppingCartService.getCurrentCart(httpServletRequest.getSession()), user);
+        Order order = new Order();
+        order.setUser(user);
+        order.setOrderItem(cart.getItems());
+        order.setPrice(cart.getTotalCost());
         List<DeliveryAddress> deliveryAddress = deliveryAddressService.findByUserId(user.getId());
+
 
         model.addAttribute("order", order);
         model.addAttribute("deliveryAddresses", deliveryAddress);
@@ -72,11 +82,18 @@ public class OrderController {
     @PostMapping("/confirm")
     public String orderConfirm(Model model, HttpServletRequest httpServletRequest, @ModelAttribute(name = "order") Order orderFromFrontend, Principal principal) {
         User user = userService.findByUserName(principal.getName());
-        Order order = orderService.makeOrder(shoppingCartService.getCurrentCart(httpServletRequest.getSession()), user);
+        ShoppingCart cart = shoppingCartService.getCurrentCart(httpServletRequest.getSession());
+        Order order = orderService.makeOrder(cart, user);
         order.setDeliveryAddress(orderFromFrontend.getDeliveryAddress());
         order.setPhoneNumber(orderFromFrontend.getPhoneNumber());
         order.setDeliveryDate(LocalDateTime.now().plusDays(7));
+//        order.set
         order.setDeliveryPrice(0.0);
+        for (OrderItem oi: cart.getItems()) {
+            oi.setOrder(orderService.findByUserId(user.getId()));
+            orderItemService.save(oi);
+
+        }
         orderService.saveOrder(order);
         model.addAttribute("order", order);
         return "order-filler";

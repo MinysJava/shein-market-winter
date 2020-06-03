@@ -1,10 +1,8 @@
 package com.geekbrains.geekmarketwinter.services;
 
-import com.geekbrains.geekmarketwinter.entites.DeliveryAddress;
-import com.geekbrains.geekmarketwinter.entites.Order;
-import com.geekbrains.geekmarketwinter.entites.OrderStatus;
-import com.geekbrains.geekmarketwinter.entites.User;
+import com.geekbrains.geekmarketwinter.entites.*;
 import com.geekbrains.geekmarketwinter.repositories.DeliveryAddressRepository;
+import com.geekbrains.geekmarketwinter.repositories.OrderItemRepository;
 import com.geekbrains.geekmarketwinter.repositories.OrderRepository;
 import com.geekbrains.geekmarketwinter.utils.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,19 +10,23 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class OrderService {
     private OrderRepository orderRepository;
     private OrderStatusService orderStatusService;
+    private OrderItemService orderItemService;
 //    private ShoppingCartService shoppingCartService;
 //    private UserService userService;
 //    private DeliveryAddressService deliveryAddressService;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, OrderStatusService orderStatusService) {
+    public OrderService(OrderRepository orderRepository, OrderStatusService orderStatusService, OrderItemService orderItemService) {
         this.orderRepository = orderRepository;
         this.orderStatusService = orderStatusService;
+        this.orderItemService = orderItemService;
 //        this.shoppingCartService = shoppingCartService;
 //        this.userService = userService;
 //        this.deliveryAddressService = deliveryAddressService  ;
@@ -33,14 +35,25 @@ public class OrderService {
     public Order makeOrder(ShoppingCart cart, User user) {
         Order order = new Order();
 //        ShoppingCart cart = shoppingCartService.getCurrentCart(session);
+//        for (OrderItem oi: cart.getItems()) {
+//            orderItemService.save(oi);
+//        }
+        DeliveryAddress deliveryAddress = new DeliveryAddress();
+        deliveryAddress.setAddress("-");
+        deliveryAddress.setId(0L);
 
 
 
 
-        order.setOrderItem(cart.getItems());
+//        order.setOrderItem(cart.getItems());
         order.setUser(user);
         order.setPrice(cart.getTotalCost());
         order.setStatus(orderStatusService.findByTitle("Сформирован"));
+        order.setDeliveryAddress(deliveryAddress);
+        order.setPhoneNumber("-");
+        order.setDeliveryDate(LocalDateTime.now().plusDays(7));
+        order.setDeliveryPrice(0.0);
+//        orderRepository.save(order);
 //        order.setDeliveryAddress(deliveryAddressService.findByUserId(user.getId()));
 
 //        order.setPrice(cart.getTotalCost());
@@ -67,5 +80,17 @@ public class OrderService {
 
     public Order findById(Long id) {
         return orderRepository.findOrderById(id);
+    }
+
+//    public Order finalSetOrder(ShoppingCart currentCart, User user) {
+//        return order;
+//    }
+
+    public Order findByUserId(Long id){
+        List<Order> listOrder = orderRepository.findAllByUserId(id);
+
+        Order order = listOrder.get(listOrder.size() - 1);
+
+        return order;
     }
 }

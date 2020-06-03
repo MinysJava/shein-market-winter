@@ -1,8 +1,11 @@
 package com.geekbrains.geekmarketwinter.services;
 
+import com.geekbrains.geekmarketwinter.entites.OrderItem;
 import com.geekbrains.geekmarketwinter.repositories.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class OrderItemService {
@@ -11,6 +14,11 @@ public class OrderItemService {
     @Autowired
     public OrderItemService(OrderItemRepository orderItemRepository) {
         this.orderItemRepository = orderItemRepository;
+    }
+
+
+    public void save(OrderItem orderItem) {
+        orderItemRepository.save(orderItem);
     }
 
 
