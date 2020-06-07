@@ -73,14 +73,14 @@ public class UserServiceImpl implements UserService {
 
         user.setRoles(Arrays.asList(roleRepository.findOneByName("ROLE_EMPLOYEE")));
 
-        userRepository.save(user);
+        userProvider.save(user);
         return true;
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userRepository.findOneByUserName(userName);
+        User user = userProvider.findByUserName(userName);
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }

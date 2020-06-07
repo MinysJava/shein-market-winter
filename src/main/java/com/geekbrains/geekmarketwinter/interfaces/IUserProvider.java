@@ -4,4 +4,6 @@ import com.geekbrains.geekmarketwinter.entites.User;
 
 public interface IUserProvider {
     public User findByUserName(String userName);
+
+    public void save (User user);
 }
