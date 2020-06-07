@@ -3,6 +3,7 @@ package com.geekbrains.geekmarketwinter.services;
 import com.geekbrains.geekmarketwinter.entites.Role;
 import com.geekbrains.geekmarketwinter.entites.SystemUser;
 import com.geekbrains.geekmarketwinter.entites.User;
+import com.geekbrains.geekmarketwinter.interfaces.IRoleProvider;
 import com.geekbrains.geekmarketwinter.interfaces.IUserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,13 +24,18 @@ public class UserServiceImpl implements UserService {
 //    private RoleRepository roleRepository;
     private BCryptPasswordEncoder passwordEncoder;
     private IUserProvider userProvider;
+    private IRoleProvider roleProvider;
 
     @Autowired
     public void setUserProvider(IUserProvider userProvider) {
         this.userProvider = userProvider;
     }
 
-//    @Autowired
+    public void setRoleProvider(IRoleProvider roleProvider) {
+        this.roleProvider = roleProvider;
+    }
+
+    //    @Autowired
 //    public void setUserRepository(UserRepository userRepository) {
 //        this.userRepository = userRepository;
 //    }
@@ -71,7 +77,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(systemUser.getLastName());
         user.setEmail(systemUser.getEmail());
 
-        user.setRoles(Arrays.asList(roleRepository.findOneByName("ROLE_EMPLOYEE")));
+        user.setRoles(Arrays.asList(roleProvider.findOneByName("ROLE_EMPLOYEE")));
 
         userProvider.save(user);
         return true;
