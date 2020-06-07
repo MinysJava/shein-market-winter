@@ -1,7 +1,6 @@
 package com.geekbrains.geekmarketwinter.services;
 
 import com.geekbrains.geekmarketwinter.entites.OrderStatus;
-import com.geekbrains.geekmarketwinter.repositories.OrderStatusRepository;
 import org.springframework.stereotype.Service;
 
 @Service

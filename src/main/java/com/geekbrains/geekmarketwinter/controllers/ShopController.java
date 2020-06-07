@@ -1,7 +1,7 @@
 package com.geekbrains.geekmarketwinter.controllers;
 
 import com.geekbrains.geekmarketwinter.entites.Product;
-import com.geekbrains.geekmarketwinter.repositories.specifications.ProductSpecs;
+import com.geekbrains.geekmarketwinter.utils.ProductSpecs;
 import com.geekbrains.geekmarketwinter.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -73,14 +73,10 @@ public class ShopController {
         }
 
         Page<Product> products = productService.getProductsWithPagingAndFiltering(currentPage, PAGE_SIZE, spec);
-        //Page<Product> products = productService.getProductsWithPagingAndFiltering(currentPage, PAGE_SIZE);
 
         model.addAttribute("products", products.getContent());
         model.addAttribute("page", currentPage);
         model.addAttribute("totalPage", products.getTotalPages());
-
-  //      model.addAttribute("filters", filters.toString());
-
         model.addAttribute("min", min);
         model.addAttribute("max", max);
         model.addAttribute("word", word);

@@ -1,7 +1,6 @@
 package com.geekbrains.geekmarketwinter.services;
 
 import com.geekbrains.geekmarketwinter.entites.DeliveryAddress;
-import com.geekbrains.geekmarketwinter.repositories.DeliveryAddressRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
