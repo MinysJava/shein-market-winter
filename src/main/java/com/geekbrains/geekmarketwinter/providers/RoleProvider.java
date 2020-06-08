@@ -1,7 +1,6 @@
 package com.geekbrains.geekmarketwinter.providers;
 
 import com.geekbrains.geekmarketwinter.entites.Role;
-import com.geekbrains.geekmarketwinter.entites.User;
 import com.geekbrains.geekmarketwinter.interfaces.IRoleProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

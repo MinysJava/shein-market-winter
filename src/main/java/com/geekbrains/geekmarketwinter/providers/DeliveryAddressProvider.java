@@ -1,7 +1,7 @@
 package com.geekbrains.geekmarketwinter.providers;
 
 import com.geekbrains.geekmarketwinter.entites.DeliveryAddress;
-import com.geekbrains.geekmarketwinter.interfaces.IDeliveryAddress;
+import com.geekbrains.geekmarketwinter.interfaces.IDeliveryAddressProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.sql2o.Connection;
@@ -10,7 +10,7 @@ import org.sql2o.Sql2o;
 import java.util.List;
 
 @Component
-public class DeliveryAddressProvider implements IDeliveryAddress {
+public class DeliveryAddressProvider implements IDeliveryAddressProvider {
 
     private final Sql2o sql2o;
 

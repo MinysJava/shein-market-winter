@@ -1,14 +1,14 @@
 package com.geekbrains.geekmarketwinter.providers;
 
 import com.geekbrains.geekmarketwinter.entites.OrderItem;
-import com.geekbrains.geekmarketwinter.interfaces.IOrderItem;
+import com.geekbrains.geekmarketwinter.interfaces.IOrderItemProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 @Component
-public class OrderItemProvider implements IOrderItem {
+public class OrderItemProvider implements IOrderItemProvider {
     private final Sql2o sql2o;
 
     private static final String INSERT_ORDERITEM = "insert into orders_item(product_id, order_id, quantity, item_price, total_price) values(:v_product_id, :v_order_id," +

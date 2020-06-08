@@ -4,7 +4,7 @@ import com.geekbrains.geekmarketwinter.entites.DeliveryAddress;
 
 import java.util.List;
 
-public interface IDeliveryAddress {
+public interface IDeliveryAddressProvider {
 
    List<DeliveryAddress> findByUserId(Long id);
 
