@@ -11,12 +11,12 @@ import java.util.List;
 public class CategoryService {
     private ICategoryProvider categoryProvider;
 
-
+    @Autowired
     public void setCategoryProvider(ICategoryProvider categoryProvider) {
         this.categoryProvider = categoryProvider;
     }
 
     public List<Category> getAllCategories() {
-        return (List<Category>)categoryProvider.findAll();
+        return categoryProvider.findAll();
     }
 }

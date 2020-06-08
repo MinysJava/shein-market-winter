@@ -12,9 +12,8 @@ public class DeliveryAddressService {
 
     private IDeliveryAddress deliveryAddress;
 
-
     @Autowired
-    public DeliveryAddressService(IDeliveryAddress deliveryAddress) {
+    public void setDeliveryAddress(IDeliveryAddress deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
     }
 
