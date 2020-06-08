@@ -5,11 +5,13 @@ import com.geekbrains.geekmarketwinter.entites.Role;
 import com.geekbrains.geekmarketwinter.entites.User;
 import com.geekbrains.geekmarketwinter.interfaces.ICategoryProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import java.util.List;
 
+@Component
 public class CategoryProvider implements ICategoryProvider {
     private final Sql2o sql2o;
 
@@ -20,11 +22,11 @@ public class CategoryProvider implements ICategoryProvider {
     }
 
     @Override
-    public Category findAll() {
+    public List<Category> findAll() {
         try (Connection connection = sql2o.open()) {
             return connection.createQuery(SELECT_CATEGORY, false)
-                    .setColumnMappings(User.COLUMN_MAPPINGS)
-                    .executeAndFetchFirst(Category.class);
+                    .setColumnMappings(Category.COLUMN_MAPPINGS)
+                    .executeAndFetch(Category.class);
         }
     }
 }

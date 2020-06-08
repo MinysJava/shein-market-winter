@@ -23,7 +23,7 @@ public class RoleProvider implements IRoleProvider {
         try (Connection connection = sql2o.open()) {
             return connection.createQuery(SELECT_ROLE, false)
                     .addParameter("r_name", roleName)
-                    .setColumnMappings(User.COLUMN_MAPPINGS)
+                    .setColumnMappings(Role.COLUMN_MAPPINGS)
                     .executeAndFetchFirst(Role.class);
         }
     }
