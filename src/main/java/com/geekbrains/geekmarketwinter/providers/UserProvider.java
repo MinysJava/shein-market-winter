@@ -1,4 +1,4 @@
-package com.geekbrains.geekmarketwinter.Providers;
+package com.geekbrains.geekmarketwinter.providers;
 
 import com.geekbrains.geekmarketwinter.entites.User;
 import com.geekbrains.geekmarketwinter.interfaces.IUserProvider;

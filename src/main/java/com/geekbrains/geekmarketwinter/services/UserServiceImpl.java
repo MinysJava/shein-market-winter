@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
         this.userProvider = userProvider;
     }
 
+    @Autowired
     public void setRoleProvider(IRoleProvider roleProvider) {
         this.roleProvider = roleProvider;
     }
