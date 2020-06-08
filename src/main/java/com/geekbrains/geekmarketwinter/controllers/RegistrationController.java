@@ -2,7 +2,7 @@ package com.geekbrains.geekmarketwinter.controllers;
 
 import com.geekbrains.geekmarketwinter.entites.SystemUser;
 import com.geekbrains.geekmarketwinter.entites.User;
-import com.geekbrains.geekmarketwinter.services.UserService;
+import com.geekbrains.geekmarketwinter.interfaces.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

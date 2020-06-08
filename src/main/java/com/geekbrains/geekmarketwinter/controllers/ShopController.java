@@ -1,6 +1,7 @@
 package com.geekbrains.geekmarketwinter.controllers;
 
 import com.geekbrains.geekmarketwinter.entites.Product;
+import com.geekbrains.geekmarketwinter.interfaces.UserService;
 import com.geekbrains.geekmarketwinter.utils.ProductSpecs;
 import com.geekbrains.geekmarketwinter.services.*;
 import org.springframework.beans.factory.annotation.Autowired;

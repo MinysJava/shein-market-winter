@@ -5,6 +5,7 @@ import com.geekbrains.geekmarketwinter.entites.SystemUser;
 import com.geekbrains.geekmarketwinter.entites.User;
 import com.geekbrains.geekmarketwinter.interfaces.IRoleProvider;
 import com.geekbrains.geekmarketwinter.interfaces.IUserProvider;
+import com.geekbrains.geekmarketwinter.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

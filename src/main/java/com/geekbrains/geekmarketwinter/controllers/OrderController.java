@@ -4,6 +4,7 @@ import com.geekbrains.geekmarketwinter.entites.DeliveryAddress;
 import com.geekbrains.geekmarketwinter.entites.Order;
 import com.geekbrains.geekmarketwinter.entites.OrderItem;
 import com.geekbrains.geekmarketwinter.entites.User;
+import com.geekbrains.geekmarketwinter.interfaces.UserService;
 import com.geekbrains.geekmarketwinter.services.*;
 import com.geekbrains.geekmarketwinter.utils.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
