@@ -26,9 +26,9 @@ public class OrderItemProvider implements IOrderItemProvider {
     @Override
     public void save(OrderItem orderItem) {
         try (Connection connection = sql2o.open()) {
-            Long orderItem_id = orderItem.getId();
-            if(connection.createQuery(CHECK_ORDERITEM).addParameter("oi_id", orderItem_id).setColumnMappings(OrderItem.COLUMN_MAPPINGS).executeAndFetchFirst(OrderItem.class).getId() != null){
+            if(connection.createQuery(CHECK_ORDERITEM).addParameter("oi_id", orderItem.getId()).setColumnMappings(OrderItem.COLUMN_MAPPINGS).executeAndFetchFirst(OrderItem.class).getId() != null){
                 connection.createQuery(UPDATE_ORDERITEM, false)
+                        .addParameter("oi_id", orderItem.getId())
                         .addParameter("v_product_id", orderItem.getProduct())
                         .addParameter("v_order_id", orderItem.getOrder())
                         .addParameter("v_quantity", orderItem.getQuantity())
