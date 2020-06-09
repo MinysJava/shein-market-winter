@@ -6,7 +6,9 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "orders")
@@ -56,4 +58,18 @@ public class Order {
     @JsonIgnore
     @Transient
     private boolean confirmed;
+
+    public static final Map<String, String> COLUMN_MAPPINGS = new HashMap<>();
+
+    static {
+        COLUMN_MAPPINGS.put("id", "id");
+        COLUMN_MAPPINGS.put("user_id", "user");
+        COLUMN_MAPPINGS.put("status_id", "status");
+        COLUMN_MAPPINGS.put("price", "price");
+        COLUMN_MAPPINGS.put("delivery_price", "deliveryPrice");
+        COLUMN_MAPPINGS.put("phone_number", "phoneNumber");
+        COLUMN_MAPPINGS.put("delivery_date", "deliveryDate");
+        COLUMN_MAPPINGS.put("create_at", "createAt");
+        COLUMN_MAPPINGS.put("update_at", "updateAt");
+    }
 }

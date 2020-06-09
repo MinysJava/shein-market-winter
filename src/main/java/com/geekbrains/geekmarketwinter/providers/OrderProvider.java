@@ -1,7 +1,6 @@
 package com.geekbrains.geekmarketwinter.providers;
 
 import com.geekbrains.geekmarketwinter.entites.Order;
-import com.geekbrains.geekmarketwinter.entites.User;
 import com.geekbrains.geekmarketwinter.interfaces.IOrderProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -48,7 +47,7 @@ public class OrderProvider implements IOrderProvider {
             return connection.createQuery(SELECT_ORDER_BY_USER_QUERY, false)
                     .addParameter("u_id", id)
                     .setColumnMappings(Order.COLUMN_MAPPINGS)
-                    .executeAndFetchFirst(Order.class);
+                    .executeAndFetch(Order.class);
         }
     }
 

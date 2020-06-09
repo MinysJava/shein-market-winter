@@ -3,6 +3,8 @@ package com.geekbrains.geekmarketwinter.entites;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "categories")
@@ -18,4 +20,12 @@ public class Category {
 
     @Column(name = "description")
     private String description;
+
+    public static final Map<String, String> COLUMN_MAPPINGS = new HashMap<>();
+
+    static {
+        COLUMN_MAPPINGS.put("id", "id");
+        COLUMN_MAPPINGS.put("title", "title");
+        COLUMN_MAPPINGS.put("description", "description");
+    }
 }

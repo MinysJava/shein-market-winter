@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Entity
 @Data
 @Table(name = "users")
 public class User {
