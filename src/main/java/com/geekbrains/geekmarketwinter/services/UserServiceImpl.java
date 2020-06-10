@@ -89,6 +89,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userProvider.findByUserName(userName);
+        user.setRoles(roleProvider.findByUserId(user.getId()));
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
