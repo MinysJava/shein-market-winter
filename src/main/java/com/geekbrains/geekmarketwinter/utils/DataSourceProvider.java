@@ -27,7 +27,7 @@ public class DataSourceProvider implements TransactionManagementConfigurer {
     @Value("${datasource.driver-class-name}")
     private String DRIVER_CLASS_NAME;
 
-    @Bean
+//    @Bean
     @Override
     @NonNull
     public PlatformTransactionManager annotationDrivenTransactionManager() {
