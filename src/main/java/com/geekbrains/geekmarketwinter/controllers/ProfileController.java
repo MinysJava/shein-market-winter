@@ -4,7 +4,7 @@ package com.geekbrains.geekmarketwinter.controllers;
 import com.geekbrains.geekmarketwinter.entites.Order;
 import com.geekbrains.geekmarketwinter.entites.User;
 import com.geekbrains.geekmarketwinter.services.OrderService;
-import com.geekbrains.geekmarketwinter.services.UserService;
+import com.geekbrains.geekmarketwinter.interfaces.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

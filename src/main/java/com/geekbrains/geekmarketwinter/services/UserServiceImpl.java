@@ -3,8 +3,9 @@ package com.geekbrains.geekmarketwinter.services;
 import com.geekbrains.geekmarketwinter.entites.Role;
 import com.geekbrains.geekmarketwinter.entites.SystemUser;
 import com.geekbrains.geekmarketwinter.entites.User;
-import com.geekbrains.geekmarketwinter.repositories.RoleRepository;
-import com.geekbrains.geekmarketwinter.repositories.UserRepository;
+import com.geekbrains.geekmarketwinter.interfaces.IRoleProvider;
+import com.geekbrains.geekmarketwinter.interfaces.IUserProvider;
+import com.geekbrains.geekmarketwinter.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,19 +21,36 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
+//    private UserRepository userRepository;
+//    private RoleRepository roleRepository;
     private BCryptPasswordEncoder passwordEncoder;
+    private IUserProvider userProvider;
+    private IRoleProvider roleProvider;
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setUserProvider(IUserProvider userProvider) {
+        this.userProvider = userProvider;
     }
 
     @Autowired
-    public void setRoleRepository(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
+    public void setRoleProvider(IRoleProvider roleProvider) {
+        this.roleProvider = roleProvider;
     }
+
+    //    @Autowired
+//    public void setUserRepository(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
+
+//    @Autowired
+//    public void setUserRepository(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
+//
+//    @Autowired
+//    public void setRoleRepository(RoleRepository roleRepository) {
+//        this.roleRepository = roleRepository;
+//    }
 
     @Autowired
     public void setPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
@@ -42,7 +60,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User findByUserName(String username) {
-        return userRepository.findOneByUserName(username);
+        return userProvider.findByUserName(username);
+//        return userRepository.findOneByUserName(username);
     }
 
     @Override
@@ -60,16 +79,17 @@ public class UserServiceImpl implements UserService {
         user.setLastName(systemUser.getLastName());
         user.setEmail(systemUser.getEmail());
 
-        user.setRoles(Arrays.asList(roleRepository.findOneByName("ROLE_EMPLOYEE")));
+        user.setRoles(Arrays.asList(roleProvider.findOneByName("ROLE_EMPLOYEE")));
 
-        userRepository.save(user);
+        userProvider.save(user);
         return true;
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userRepository.findOneByUserName(userName);
+        User user = userProvider.findByUserName(userName);
+        user.setRoles(roleProvider.findByUserId(user.getId()));
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }

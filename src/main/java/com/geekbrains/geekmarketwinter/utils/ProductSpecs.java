@@ -1,4 +1,4 @@
-package com.geekbrains.geekmarketwinter.repositories.specifications;
+package com.geekbrains.geekmarketwinter.utils;
 
 import com.geekbrains.geekmarketwinter.entites.Product;
 import org.springframework.data.jpa.domain.Specification;

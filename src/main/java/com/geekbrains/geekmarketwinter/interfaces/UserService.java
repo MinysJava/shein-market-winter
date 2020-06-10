@@ -1,4 +1,4 @@
-package com.geekbrains.geekmarketwinter.services;
+package com.geekbrains.geekmarketwinter.interfaces;
 
 import com.geekbrains.geekmarketwinter.entites.SystemUser;
 import com.geekbrains.geekmarketwinter.entites.User;

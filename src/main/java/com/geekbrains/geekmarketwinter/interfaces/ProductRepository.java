@@ -1,4 +1,4 @@
-package com.geekbrains.geekmarketwinter.repositories;
+package com.geekbrains.geekmarketwinter.interfaces;
 
 import com.geekbrains.geekmarketwinter.entites.Product;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
