@@ -6,6 +6,9 @@ import com.geekbrains.geekmarketwinter.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -93,5 +96,13 @@ public class ShopController {
         shoppingCartService.addToCart(httpServletRequest.getSession(), id);
         String referrer = httpServletRequest.getHeader("referer");
         return "redirect:" + referrer;
+    }
+
+    @MessageMapping("/addToCart")
+    @SendTo("/shop")
+    public Product product(Message message) throws Exception {
+        Thread.sleep(3000); // simulated delay
+
+        return new Greeting(message.getName() + " добавлен в коризну!");
     }
 }

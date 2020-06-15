@@ -20,7 +20,8 @@
 
 <div class="container">
     <br>
-
+<div style="display: flex; justify-content: space-between;">
+    <div>
     <h1 th:text="Фильтры" />
 
     <form th:action="@{/shop}" method="get">
@@ -30,7 +31,12 @@
         <input th:value="${max != null} ? ${max}" th:name="max" type="number" placeholder="Максимальная цена">
         <button type="submit" class="btn btn-primary">Фильтровать</button>
     </form>
+    </div>
+    <div style="width: 300px; height: auto; border: 1px solid black; border-radius: 5%; ">
+        fdfddddddd
 
+    </div>
+</div>
     <br>
 
     <h1 th:text="#{products.list}" />
@@ -57,8 +63,8 @@
             </td>
             <td th:text="${product.title}"/>
             <td th:text="${product.price}"/>
-            <td>
-                <a th:href="@{'/shop/cart/add/' + ${product.id}}" class="btn btn-primary">Добавить в корзину</a>
+            <td style="display: flex">
+                <a th:href="@{'/shop/cart/add/' + ${product.id}}" class="btn btn-primary" onclick="sendProduct(${product.id})">Добавить в корзину</a>  <div style="margin-left: 15px" id="prod_sum"> </div>
             </td>
         </tr>
         </tbody>

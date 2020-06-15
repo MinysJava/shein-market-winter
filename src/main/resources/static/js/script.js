@@ -3,7 +3,7 @@ var stompClient = null;
 window.onload = connect();
 
 function connect() {
-    var socket = new SockJS('/hello');
+    var socket = new SockJS('/shop');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
@@ -13,9 +13,9 @@ function connect() {
     });
 }
 
-function sendName() {
-    var name = 'товар';
-    stompClient.send("/app/hello", {}, JSON.stringify({ 'name': name }));
+function sendProduct(id) {
+    // var name = 'товар';
+    stompClient.send("/app/shop", {}, JSON.stringify({ 'id': id }));
 }
 
 function showGreeting(message) {
