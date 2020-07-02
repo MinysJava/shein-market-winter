@@ -5,13 +5,19 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Entity
 @Table(name = "orders")
 @Data
-public class Order {
+public class Order implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,4 +62,21 @@ public class Order {
     @JsonIgnore
     @Transient
     private boolean confirmed;
+
+    public byte[] toBytes() {
+        byte[]bytes;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try{
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(this);
+            oos.flush();
+            oos.reset();
+            bytes = baos.toByteArray();
+            oos.close();
+            baos.close();
+        } catch(IOException e){
+            bytes = new byte[] {};
+        }
+        return bytes;
+    }
 }
