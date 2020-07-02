@@ -84,6 +84,7 @@ public class OrderController {
         order.setConfirmed(true);
         order.setOrderItem(cart.getItems());
         orderService.saveOrder(order);
+        orderService.sendOrder(order);
         model.addAttribute("order", order);
         return "order-filler";
     }
