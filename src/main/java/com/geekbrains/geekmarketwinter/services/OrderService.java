@@ -23,16 +23,30 @@ public class OrderService {
     }
 
     public Order makeOrder(ShoppingCart cart, User user) {
-        Order order = new Order();
-        order.setUser(user);
-        order.setPrice(cart.getTotalCost());
-        order.setStatus(orderStatusService.findByTitle("Сформирован"));
-        order.setDeliveryAddress(deliveryAddressService.findFirstByUserId(user.getId()));
-        order.setPhoneNumber("-");
-        order.setDeliveryDate(LocalDateTime.now().plusDays(7));
-        order.setDeliveryPrice(0.0);
-        order.setDeliveryDate(LocalDateTime.now().plusDays(7));
+//        Order order = new Order();
+//        order.setUser(user);
+//        order.setPrice(cart.getTotalCost());
+//        order.setStatus(orderStatusService.findByTitle("Сформирован"));
+//        order.setDeliveryAddress(deliveryAddressService.findFirstByUserId(user.getId()));
+//        order.setPhoneNumber("-");
+//        order.setDeliveryDate(LocalDateTime.now().plusDays(7));
+//        order.setDeliveryPrice(0.0);
+//        orderRepository.save(order);
+
+        OrderBuilder orderBuilder = new OrderBuilder();
+
+        Order order = orderBuilder
+                .user(user)
+                .price(cart.getTotalCost())
+                .status(orderStatusService.findByTitle("Сформирован"))
+                .deliveryAddress(deliveryAddressService.findFirstByUserId(user.getId()))
+                .phoneNumber("-")
+                .deliveryDate(LocalDateTime.now().plusDays(7))
+                .price(0.0)
+                .build();
+
         orderRepository.save(order);
+
         return order;
     }
 
